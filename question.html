@@ -329,17 +329,17 @@
             <h1>Qui est ta copine ?</h1>
             <div class="buttons">
                 <button class="btn-choice" onclick="goToClaire()">Claire</button>
-                <button class="btn-choice" onclick="goToJulieWarning()">Julie</button>
+                <button class="btn-choice" onclick="goToHome()">Julie</button>
             </div>
         </div>
     </div>
 
-    <!-- Page: Julie Warning -->
-    <div class="page" id="page-julie">
+    <!-- Page: Home -->
+    <div class="page" id="page-home">
         <div class="container">
-            <h1>Qui est julie??? tu me dois des explication!</h1>
+            <h1>Oups! Julie n'existe pas ici 😅</h1>
             <div class="buttons">
-                <button class="btn-choice" onclick="goToCopine()">On recommence</button>
+                <button class="btn-choice" onclick="goToHome()">Let's Start</button>
             </div>
         </div>
     </div>
@@ -361,7 +361,7 @@
         <div class="container">
             <h1>Je t'aime mon amour ❤️</h1>
             <div class="buttons">
-                <button class="btn-choice" onclick="goToCopine()">Retour</button>
+                <button class="btn-choice" onclick="goToHome()">Retour</button>
             </div>
         </div>
         <div class="audio-control" onclick="toggleMusic()" title="Cliquez pour activer/désactiver la musique">
@@ -374,7 +374,7 @@
         <div class="container">
             <h1>Pourquoi tu es la alors?</h1>
             <div class="buttons">
-                <button class="btn-choice" onclick="goToCopine()">Retour</button>
+                <button class="btn-choice" onclick="goToHome()">Retour</button>
             </div>
         </div>
     </div>
@@ -404,17 +404,13 @@
             }
         }
 
-        function goToCopine() {
-            showPage('page-copine', 'page-copine');
+        function goToHome() {
+            showPage('page-home', 'page-copine');
             removeAllConfetti();
         }
 
         function goToClaire() {
             showPage('page-claire', 'page-claire');
-        }
-
-        function goToJulieWarning() {
-            showPage('page-julie', 'page-julie');
         }
 
         function goToYes() {
@@ -511,7 +507,7 @@
 
         // Redirection depuis la page d'accueil
         function startJourney() {
-            goToCopine();
+            goToHome();
         }
     </script>
 </body>
