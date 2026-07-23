@@ -27,7 +27,7 @@
         }
 
         body.page-julie {
-            background: #1a1a1a;
+            background: #0a0a0a;
         }
 
         body.page-claire {
@@ -57,7 +57,8 @@
         }
 
         .page-julie .container {
-            background: rgba(0, 0, 0, 0.8);
+            background: rgba(0, 0, 0, 0.85);
+            border: 3px solid #8b0000;
         }
 
         .page-claire .container {
@@ -85,15 +86,12 @@
         }
 
         .page-julie h1 {
-            font-size: 2.2rem;
-            color: #ff3333;
-            text-shadow: 2px 2px 4px rgba(255, 0, 0, 0.5);
-            font-family: 'Courier New', monospace;
+            font-size: 2.5rem;
+            color: #cc0000;
+            text-shadow: 0 0 20px rgba(204, 0, 0, 0.8);
             font-style: italic;
             font-weight: bold;
-            text-decoration: underline wavy #ff3333;
-            letter-spacing: 3px;
-            animation: shake 0.5s infinite;
+            letter-spacing: 2px;
         }
 
         .page-claire h1 {
@@ -111,18 +109,6 @@
         .page-no h1 {
             font-size: 2.2rem;
             color: #ffffff;
-        }
-
-        @keyframes shake {
-            0%, 100% {
-                transform: translateX(0);
-            }
-            25% {
-                transform: translateX(-5px);
-            }
-            75% {
-                transform: translateX(5px);
-            }
         }
 
         @keyframes pulse {
@@ -145,6 +131,20 @@
             }
         }
 
+        @keyframes blood-drop {
+            0% {
+                opacity: 0.2;
+                transform: scale(0.8);
+            }
+            50% {
+                opacity: 0.5;
+            }
+            100% {
+                opacity: 0.3;
+                transform: scale(1);
+            }
+        }
+
         .confetti {
             position: fixed;
             width: 10px;
@@ -152,6 +152,14 @@
             pointer-events: none;
             z-index: 5;
             font-size: 1.5rem;
+        }
+
+        .blood-drop {
+            position: fixed;
+            pointer-events: none;
+            z-index: 2;
+            opacity: 0.3;
+            animation: blood-drop 3s ease-in-out infinite;
         }
 
         .buttons {
@@ -187,13 +195,15 @@
         }
 
         .page-julie .btn-choice {
-            background: linear-gradient(135deg, #ff3333 0%, #cc0000 100%);
-            box-shadow: 0 4px 15px rgba(255, 51, 51, 0.4);
+            background: linear-gradient(135deg, #8b0000 0%, #660000 100%);
+            box-shadow: 0 4px 15px rgba(139, 0, 0, 0.6);
+            color: white;
+            border: 2px solid #cc0000;
         }
 
         .page-julie .btn-choice:hover {
-            box-shadow: 0 6px 20px rgba(255, 51, 51, 0.6);
-            background: linear-gradient(135deg, #cc0000 0%, #990000 100%);
+            box-shadow: 0 6px 20px rgba(204, 0, 0, 0.8);
+            background: linear-gradient(135deg, #660000 0%, #440000 100%);
         }
 
         .page-claire .btn-choice {
@@ -329,17 +339,18 @@
             <h1>Qui est ta copine ?</h1>
             <div class="buttons">
                 <button class="btn-choice" onclick="goToClaire()">Claire</button>
-                <button class="btn-choice" onclick="goToHome()">Julie</button>
+                <button class="btn-choice" onclick="goToJulie()">Julie</button>
             </div>
         </div>
     </div>
 
-    <!-- Page: Home -->
-    <div class="page" id="page-home">
+    <!-- Page: Julie (Dark/Scary) -->
+    <div class="page" id="page-julie">
+        <div id="blood-container"></div>
         <div class="container">
-            <h1>Oups! Julie n'existe pas ici 😅</h1>
+            <h1>Julie n'existe pas... 🩸</h1>
             <div class="buttons">
-                <button class="btn-choice" onclick="goToHome()">Let's Start</button>
+                <button class="btn-choice" onclick="goToCopine()">On recommence</button>
             </div>
         </div>
     </div>
@@ -361,7 +372,7 @@
         <div class="container">
             <h1>Je t'aime mon amour ❤️</h1>
             <div class="buttons">
-                <button class="btn-choice" onclick="goToHome()">Retour</button>
+                <button class="btn-choice" onclick="goToCopine()">Retour</button>
             </div>
         </div>
         <div class="audio-control" onclick="toggleMusic()" title="Cliquez pour activer/désactiver la musique">
@@ -374,7 +385,7 @@
         <div class="container">
             <h1>Pourquoi tu es la alors?</h1>
             <div class="buttons">
-                <button class="btn-choice" onclick="goToHome()">Retour</button>
+                <button class="btn-choice" onclick="goToCopine()">Retour</button>
             </div>
         </div>
     </div>
@@ -399,18 +410,26 @@
                 createConfetti();
                 createHeartsBg();
                 playMusic();
+            } else if (pageId === 'page-julie') {
+                createBloodDrops();
+                stopMusic();
             } else {
                 stopMusic();
             }
         }
 
-        function goToHome() {
-            showPage('page-home', 'page-copine');
+        function goToCopine() {
+            showPage('page-copine', 'page-copine');
             removeAllConfetti();
+            removeAllBlood();
         }
 
         function goToClaire() {
             showPage('page-claire', 'page-claire');
+        }
+
+        function goToJulie() {
+            showPage('page-julie', 'page-julie');
         }
 
         function goToYes() {
@@ -419,6 +438,25 @@
 
         function goToNo() {
             showPage('page-no', 'page-no');
+        }
+
+        // Fonction pour créer les taches de sang
+        function createBloodDrops() {
+            const container = document.getElementById('blood-container');
+            container.innerHTML = '';
+
+            const bloodCount = 30;
+            for (let i = 0; i < bloodCount; i++) {
+                const blood = document.createElement('div');
+                blood.classList.add('blood-drop');
+                blood.textContent = '🩸';
+                blood.style.fontSize = (Math.random() * 2 + 1) + 'rem';
+                blood.style.left = Math.random() * 100 + '%';
+                blood.style.top = Math.random() * 100 + '%';
+                blood.style.animationDelay = Math.random() * 2 + 's';
+                blood.style.animationDuration = (2 + Math.random() * 2) + 's';
+                container.appendChild(blood);
+            }
         }
 
         // Fonction pour créer les confetti
@@ -478,6 +516,11 @@
             document.getElementById('hearts-container').innerHTML = '';
         }
 
+        // Fonction pour supprimer tout le sang
+        function removeAllBlood() {
+            document.getElementById('blood-container').innerHTML = '';
+        }
+
         // Fonction pour jouer la musique
         function playMusic() {
             const audio = document.getElementById('musicYes');
@@ -507,7 +550,7 @@
 
         // Redirection depuis la page d'accueil
         function startJourney() {
-            goToHome();
+            goToCopine();
         }
     </script>
 </body>
