@@ -292,9 +292,35 @@
         .page-yes .hearts-bg {
             opacity: 0.4;
         }
+
+        /* Contrôle audio */
+        .audio-control {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 10px 15px;
+            border-radius: 50px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .audio-control:hover {
+            background: rgba(255, 255, 255, 1);
+            transform: scale(1.1);
+        }
     </style>
 </head>
 <body class="page-copine">
+    <!-- Audio -->
+    <audio id="musicYes" loop volume="0.5">
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+        Votre navigateur ne supporte pas l'élément audio.
+    </audio>
+
     <!-- Page: Qui est ta copine ? -->
     <div class="page active" id="page-copine">
         <div class="container">
@@ -336,6 +362,9 @@
                 <button class="btn-choice" onclick="goToCopine()">Retour</button>
             </div>
         </div>
+        <div class="audio-control" onclick="toggleMusic()" title="Cliquez pour activer/désactiver la musique">
+            🎵
+        </div>
     </div>
 
     <!-- Page: Non -->
@@ -349,6 +378,8 @@
     </div>
 
     <script>
+        let musicPlaying = false;
+
         function showPage(pageId, bodyClass) {
             // Masquer toutes les pages
             document.querySelectorAll('.page').forEach(page => {
@@ -361,10 +392,13 @@
             // Changer la classe du body
             document.body.className = bodyClass;
 
-            // Si c'est la page YES, lancer les confetti et ajouter les cœurs
+            // Si c'est la page YES, lancer les confetti, ajouter les cœurs et la musique
             if (pageId === 'page-yes') {
                 createConfetti();
                 createHeartsBg();
+                playMusic();
+            } else {
+                stopMusic();
             }
         }
 
@@ -444,6 +478,33 @@
         function removeAllConfetti() {
             document.querySelectorAll('.confetti').forEach(c => c.remove());
             document.getElementById('hearts-container').innerHTML = '';
+        }
+
+        // Fonction pour jouer la musique
+        function playMusic() {
+            const audio = document.getElementById('musicYes');
+            audio.play().catch(err => console.log('Autoplay bloqué, musique non lancée'));
+            musicPlaying = true;
+        }
+
+        // Fonction pour arrêter la musique
+        function stopMusic() {
+            const audio = document.getElementById('musicYes');
+            audio.pause();
+            audio.currentTime = 0;
+            musicPlaying = false;
+        }
+
+        // Fonction pour activer/désactiver la musique
+        function toggleMusic() {
+            const audio = document.getElementById('musicYes');
+            if (musicPlaying) {
+                audio.pause();
+                musicPlaying = false;
+            } else {
+                audio.play();
+                musicPlaying = true;
+            }
         }
 
         // Redirection depuis la page d'accueil
