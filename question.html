@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Qui est ta copine ?</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        body.page-copine {
+            background: linear-gradient(135deg, #ffeb3b 0%, #fdd835 100%);
+        }
+
+        body.page-julie {
+            background: #1a1a1a;
+        }
+
+        body.page-claire {
+            background: linear-gradient(135deg, #ff69b4 0%, #ffc0cb 100%);
+        }
+
+        .container {
+            text-align: center;
+            z-index: 10;
+            padding: 60px 40px;
+            border-radius: 20px;
+            max-width: 600px;
+            width: 90%;
+        }
+
+        .page-copine .container {
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        .page-julie .container {
+            background: rgba(0, 0, 0, 0.8);
+        }
+
+        .page-claire .container {
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        h1 {
+            margin-bottom: 50px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .page-copine h1 {
+            font-size: 2.5rem;
+            color: #333;
+        }
+
+        .page-julie h1 {
+            font-size: 2.2rem;
+            color: #ff3333;
+            text-shadow: 2px 2px 4px rgba(255, 0, 0, 0.5);
+            font-family: 'Courier New', monospace;
+            font-style: italic;
+            font-weight: bold;
+            text-decoration: underline wavy #ff3333;
+            letter-spacing: 3px;
+            animation: shake 0.5s infinite;
+        }
+
+        .page-claire h1 {
+            font-size: 2.2rem;
+            color: #ff69b4;
+        }
+
+        @keyframes shake {
+            0%, 100% {
+                transform: translateX(0);
+            }
+            25% {
+                transform: translateX(-5px);
+            }
+            75% {
+                transform: translateX(5px);
+            }
+        }
+
+        .buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        button {
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-choice {
+            background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(255, 152, 0, 0.4);
+            min-width: 150px;
+        }
+
+        .btn-choice:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 152, 0, 0.6);
+            background: linear-gradient(135deg, #f57c00 0%, #e65100 100%);
+        }
+
+        .page-julie .btn-choice {
+            background: linear-gradient(135deg, #ff3333 0%, #cc0000 100%);
+            box-shadow: 0 4px 15px rgba(255, 51, 51, 0.4);
+        }
+
+        .page-julie .btn-choice:hover {
+            box-shadow: 0 6px 20px rgba(255, 51, 51, 0.6);
+            background: linear-gradient(135deg, #cc0000 0%, #990000 100%);
+        }
+
+        .page-claire .btn-choice {
+            background: linear-gradient(135deg, #ff69b4 0%, #ff1493 100%);
+            box-shadow: 0 4px 15px rgba(255, 105, 180, 0.4);
+        }
+
+        .page-claire .btn-choice:hover {
+            box-shadow: 0 6px 20px rgba(255, 105, 180, 0.6);
+            background: linear-gradient(135deg, #ff1493 0%, #c71585 100%);
+        }
+
+        button:active {
+            transform: translateY(-1px);
+        }
+
+        /* Page cachée */
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+    </style>
+</head>
+<body class="page-copine">
+    <!-- Page: Qui est ta copine ? -->
+    <div class="page active" id="page-copine">
+        <div class="container">
+            <h1>Qui est ta copine ?</h1>
+            <div class="buttons">
+                <button class="btn-choice" onclick="goToJulie()">Claire</button>
+                <button class="btn-choice" onclick="goToJulieWarning()">Julie</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Page: Julie Warning -->
+    <div class="page" id="page-julie">
+        <div class="container">
+            <h1>Qui est julie??? tu me dois des explication!</h1>
+            <div class="buttons">
+                <button class="btn-choice" onclick="goToCopine()">On recommence</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Page: Claire Message -->
+    <div class="page" id="page-claire">
+        <div class="container">
+            <h1>Veut-elle te dire quelque chose?</h1>
+            <div class="buttons">
+                <button class="btn-choice" onclick="goToYes()">Oui</button>
+                <button class="btn-choice" onclick="goToNo()">Non</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Page: Oui -->
+    <div class="page" id="page-yes">
+        <div class="container">
+            <h1>💕 Je t'aime ❤️</h1>
+            <div class="buttons">
+                <button class="btn-choice" onclick="goToCopine()">Retour</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Page: Non -->
+    <div class="page" id="page-no">
+        <div class="container">
+            <h1>D'accord, à plus tard 😊</h1>
+            <div class="buttons">
+                <button class="btn-choice" onclick="goToCopine()">Retour</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showPage(pageId, bodyClass) {
+            // Masquer toutes les pages
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+
+            // Afficher la page demandée
+            document.getElementById(pageId).classList.add('active');
+
+            // Changer la classe du body
+            document.body.className = bodyClass;
+        }
+
+        function goToCopine() {
+            showPage('page-copine', 'page-copine');
+        }
+
+        function goToJulie() {
+            showPage('page-claire', 'page-claire');
+        }
+
+        function goToJulieWarning() {
+            showPage('page-julie', 'page-julie');
+        }
+
+        function goToYes() {
+            showPage('page-yes', 'page-claire');
+        }
+
+        function goToNo() {
+            showPage('page-no', 'page-claire');
+        }
+
+        // Redirection depuis la page d'accueil
+        function startJourney() {
+            goToCopine();
+        }
+    </script>
+</body>
+</html>
