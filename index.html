@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coucou, mi amor</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #ffd6e8 0%, #ffe0ef 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Cœurs flottants en arrière-plan */
+        .heart-bg {
+            position: absolute;
+            font-size: 2rem;
+            opacity: 0.6;
+            animation: float 6s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        .heart-bg:nth-child(1) {
+            top: 10%;
+            left: 15%;
+            animation-delay: 0s;
+            font-size: 2.5rem;
+        }
+
+        .heart-bg:nth-child(2) {
+            top: 70%;
+            left: 10%;
+            animation-delay: 1s;
+            font-size: 1.8rem;
+        }
+
+        .heart-bg:nth-child(3) {
+            top: 30%;
+            right: 20%;
+            animation-delay: 2s;
+            font-size: 2rem;
+        }
+
+        .heart-bg:nth-child(4) {
+            top: 60%;
+            right: 15%;
+            animation-delay: 3s;
+            font-size: 1.7rem;
+        }
+
+        .heart-bg:nth-child(5) {
+            top: 20%;
+            right: 50%;
+            animation-delay: 1.5s;
+            font-size: 1.5rem;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-30px) rotate(10deg);
+            }
+        }
+
+        /* Conteneur principal */
+        .container {
+            text-align: center;
+            z-index: 10;
+            background: rgba(255, 255, 255, 0.85);
+            padding: 60px 40px;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(255, 105, 180, 0.2);
+            max-width: 500px;
+            width: 90%;
+            backdrop-filter: blur(10px);
+        }
+
+        h1 {
+            font-size: 3rem;
+            color: #ff69b4;
+            margin-bottom: 30px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .emoji-heart {
+            font-size: 2rem;
+            margin: 0 8px;
+            display: inline-block;
+            animation: heartbeat 1.2s ease-in-out infinite;
+        }
+
+        .emoji-heart:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .emoji-heart:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.2);
+            }
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: #ff69b4;
+            margin-bottom: 40px;
+            opacity: 0.9;
+        }
+
+        /* Bouton GET STARTED */
+        .btn-started {
+            background: linear-gradient(135deg, #ff69b4 0%, #ff1493 100%);
+            color: white;
+            border: none;
+            padding: 15px 50px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 105, 180, 0.4);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-started:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 105, 180, 0.6);
+            background: linear-gradient(135deg, #ff1493 0%, #c71585 100%);
+        }
+
+        .btn-started:active {
+            transform: translateY(-1px);
+        }
+    </style>
+</head>
+<body>
+    <!-- Cœurs flottants en arrière-plan -->
+    <div class="heart-bg">❤️</div>
+    <div class="heart-bg">💕</div>
+    <div class="heart-bg">❤️</div>
+    <div class="heart-bg">💕</div>
+    <div class="heart-bg">❤️</div>
+
+    <!-- Contenu principal -->
+    <div class="container">
+        <h1>
+            Coucou, mi amor
+            <span class="emoji-heart">❤️</span>
+            <span class="emoji-heart">💕</span>
+            <span class="emoji-heart">❤️</span>
+        </h1>
+        
+        <p class="subtitle">Bienvenue dans mon petit monde</p>
+        
+        <button class="btn-started">Get Started</button>
+    </div>
+</body>
+</html>
