@@ -22,6 +22,10 @@
             overflow: hidden;
         }
 
+        body.page-restart {
+            background: linear-gradient(135deg, #ffd6e8 0%, #ffe0ef 100%);
+        }
+
         body.page-copine {
             background: linear-gradient(135deg, #ffeb3b 0%, #fdd835 100%);
         }
@@ -52,6 +56,10 @@
             position: relative;
         }
 
+        .page-restart .container {
+            background: rgba(255, 255, 255, 0.9);
+        }
+
         .page-copine .container {
             background: rgba(255, 255, 255, 0.9);
         }
@@ -78,6 +86,11 @@
             margin-bottom: 50px;
             font-weight: bold;
             letter-spacing: 1px;
+        }
+
+        .page-restart h1 {
+            font-size: 2.5rem;
+            color: #ff69b4;
         }
 
         .page-copine h1 {
@@ -109,6 +122,30 @@
         .page-no h1 {
             font-size: 2.2rem;
             color: #ffffff;
+        }
+
+        .emoji-heart {
+            font-size: 2rem;
+            margin: 0 8px;
+            display: inline-block;
+            animation: heartbeat 1.2s ease-in-out infinite;
+        }
+
+        .emoji-heart:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .emoji-heart:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.2);
+            }
         }
 
         @keyframes pulse {
@@ -192,6 +229,16 @@
             transform: translateY(-3px);
             box-shadow: 0 6px 20px rgba(255, 152, 0, 0.6);
             background: linear-gradient(135deg, #f57c00 0%, #e65100 100%);
+        }
+
+        .page-restart .btn-choice {
+            background: linear-gradient(135deg, #ff69b4 0%, #ff1493 100%);
+            box-shadow: 0 4px 15px rgba(255, 105, 180, 0.4);
+        }
+
+        .page-restart .btn-choice:hover {
+            box-shadow: 0 6px 20px rgba(255, 105, 180, 0.6);
+            background: linear-gradient(135deg, #ff1493 0%, #c71585 100%);
         }
 
         .page-julie .btn-choice {
@@ -326,15 +373,30 @@
         }
     </style>
 </head>
-<body class="page-copine">
+<body class="page-restart">
     <!-- Audio romantique -->
     <audio id="musicYes" loop volume="0.6">
         <source src="https://assets.mixkit.co/active_storage/sfx/2706/2706-preview.mp3" type="audio/mpeg">
         Votre navigateur ne supporte pas l'élément audio.
     </audio>
 
+    <!-- Page: Restart -->
+    <div class="page active" id="page-restart">
+        <div class="container">
+            <h1>
+                On recommence
+                <span class="emoji-heart">❤️</span>
+                <span class="emoji-heart">💕</span>
+                <span class="emoji-heart">❤️</span>
+            </h1>
+            <div class="buttons">
+                <button class="btn-choice" onclick="goToCopine()">Prêt</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Page: Qui est ta copine ? -->
-    <div class="page active" id="page-copine">
+    <div class="page" id="page-copine">
         <div class="container">
             <h1>Qui est ta copine ?</h1>
             <div class="buttons">
@@ -350,7 +412,7 @@
         <div class="container">
             <h1>Julie n'existe pas... 🩸</h1>
             <div class="buttons">
-                <button class="btn-choice" onclick="goToCopine()">On recommence</button>
+                <button class="btn-choice" onclick="goToRestart()">On recommence</button>
             </div>
         </div>
     </div>
@@ -372,7 +434,7 @@
         <div class="container">
             <h1>Je t'aime mon amour ❤️</h1>
             <div class="buttons">
-                <button class="btn-choice" onclick="goToCopine()">Retour</button>
+                <button class="btn-choice" onclick="goToRestart()">Retour</button>
             </div>
         </div>
         <div class="audio-control" onclick="toggleMusic()" title="Cliquez pour activer/désactiver la musique">
@@ -385,7 +447,7 @@
         <div class="container">
             <h1>Pourquoi tu es la alors?</h1>
             <div class="buttons">
-                <button class="btn-choice" onclick="goToCopine()">Retour</button>
+                <button class="btn-choice" onclick="goToRestart()">Retour</button>
             </div>
         </div>
     </div>
@@ -416,6 +478,12 @@
             } else {
                 stopMusic();
             }
+        }
+
+        function goToRestart() {
+            showPage('page-restart', 'page-restart');
+            removeAllConfetti();
+            removeAllBlood();
         }
 
         function goToCopine() {
@@ -550,7 +618,7 @@
 
         // Redirection depuis la page d'accueil
         function startJourney() {
-            goToCopine();
+            goToRestart();
         }
     </script>
 </body>
